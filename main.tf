@@ -419,6 +419,92 @@ resource "aws_security_group_rule" "computed_ingress_with_self" {
   )
 }
 
+# Security group rules with "prefix_list_id", but without "source_security_group_id", "cidr_blocks" and "self"
+resource "aws_security_group_rule" "ingress_with_prefix_list_id" {
+  count = var.create ? length(var.ingress_with_prefix_list_id) : 0
+
+  security_group_id = local.this_sg_id
+  type              = "ingress"
+
+  prefix_list_ids = [var.ingress_with_prefix_list_id[count.index]["prefix_list_id"]]
+  description     = lookup(
+    var.ingress_with_prefix_list_id[count.index],
+    "description",
+    "Ingress Rule",
+  )
+
+  from_port = lookup(
+    var.ingress_with_prefix_list_id[count.index],
+    "from_port",
+    var.rules[lookup(
+      var.ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][0],
+  )
+  to_port = lookup(
+    var.ingress_with_prefix_list_id[count.index],
+    "to_port",
+    var.rules[lookup(
+      var.ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][1],
+  )
+  protocol = lookup(
+    var.ingress_with_prefix_list_id[count.index],
+    "protocol",
+    var.rules[lookup(
+      var.ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][2],
+  )
+}
+
+# Computed -  Security group rules with "prefix_list_id", but without "source_security_group_id", "cidr_blocks" and "self"
+resource "aws_security_group_rule" "computed_ingress_with_prefix_list_id" {
+  count = var.create ? var.number_of_computed_ingress_with_prefix_list_id : 0
+
+  security_group_id = local.this_sg_id
+  type              = "ingress"
+
+  prefix_list_ids = [var.computed_ingress_with_prefix_list_id[count.index]["prefix_list_id"]]
+  description     = lookup(
+    var.computed_ingress_with_prefix_list_id[count.index],
+    "description",
+    "Ingress Rule",
+  )
+
+  from_port = lookup(
+    var.computed_ingress_with_prefix_list_id[count.index],
+    "from_port",
+    var.rules[lookup(
+      var.computed_ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][0],
+  )
+  to_port = lookup(
+    var.computed_ingress_with_prefix_list_id[count.index],
+    "to_port",
+    var.rules[lookup(
+      var.computed_ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][1],
+  )
+  protocol = lookup(
+    var.computed_ingress_with_prefix_list_id[count.index],
+    "protocol",
+    var.rules[lookup(
+      var.computed_ingress_with_prefix_list_id[count.index],
+      "rule",
+      "_",
+    )][2],
+  )
+}
+
 #################
 # End of ingress
 #################
