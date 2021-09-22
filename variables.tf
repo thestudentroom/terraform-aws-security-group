@@ -184,8 +184,8 @@ variable "number_of_computed_ingress_with_source_security_group_id" {
   default     = 0
 }
 
-variable "number_of_computed_ingress_with_prefix_list_ids" {
-  description = "Number of computed ingress rules to create where 'prefix_list_ids' is used"
+variable "number_of_computed_ingress_with_prefix_list_id" {
+  description = "Number of computed ingress rules to create where 'prefix_list_id' is used"
   type        = number
   default     = 0
 }
